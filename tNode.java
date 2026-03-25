@@ -60,5 +60,41 @@ public class tryBST{
 
             return isBST(node.left, min, node.key) && isBST(node.right, node.key, max);
         }
+
     }
+    private tNode deleteNode(tNode node, int key) {
+        if (node == null) {
+            return null;
+        }
+        if (key < node.key) node.left = deleteNode(node.left, key);
+        else if (key > node.key) {
+            node.right = deleteNode(node.right, key);
+        }
+        else {
+            if (node.left == null) {
+                return node.right;
+            }
+            else if (node.right == null) {
+                return node.left;
+            }
+            
+            node.key = minValue(node.right);
+            node.right = deleteNode(node.right, node.key);
+        }
+        return node;
+    }
+
+    private int minValue(tNode node) {
+        int minv = node.key;
+        while (node.left != null) {
+            minv = node.left.key;
+            node = node.left;
+        }
+        return minv;
+    }
+
+    public void deleteEven() {
+        root = deleteEven(root);
+    }
+    
 }
