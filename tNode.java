@@ -157,5 +157,13 @@ public class tryBST{
             end = System.currentTimeMillis();
             deleteTimes[i] = end - start;
         }
+        double avgPopulate = average(populateTimes);
+        double stdPopulate = stdDev(populateTimes, avgPopulate);
+        double avgDelete = average(deleteTimes);
+        double stdDelete = stdDev(deleteTimes, avgDelete);
+
+        System.out.println("Number of keys n       Average time (ms)     Std Deviation");
+        System.out.printf("Populate tree           %.2f                 %.2f%n", avgPopulate, stdPopulate);
+        System.out.printf("Remove evens from tree  %.2f
     }    
 }
