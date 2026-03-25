@@ -96,5 +96,66 @@ public class tryBST{
     public void deleteEven() {
         root = deleteEven(root);
     }
-    
+    private tNode deleteEven(tNode node) {
+        if (node == null) return null;
+        node.left = deleteEven(node.left);
+        node.right = deleteEven(node.right);
+        if (node.key % 2 == 0) {
+            return deleteNode(node, node.key);
+        }
+        return node;
+    }
+
+    public static int[] generateNumbers(int n) {
+        int size = 2 * n - 1;
+        int[] arr = new int[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = i + 1;
+        }
+        return arr;
+    }
+
+    public static double average(long[] arr) {
+        long sum = 0;
+        for (long x : arr) {
+            sum += x;
+        }
+        return sum / (double) arr.length;
+    }
+
+    public static double stdDev(long[] arr, double avg) {
+        double sum = 0;
+        for (long x : arr) {
+            sum += (x - avg) * (x - avg);
+        }    
+        return Math.sqrt(sum / arr.length);
+    }
+
+    public static void main(String[] args) {
+        int n = 7;
+        int repetitions = 30;
+        long[] populateTimes = new long[repetitions];
+        long[] deleteTimes = new long[repetitions];
+
+        int[] numbers = generateNumbers(n);
+
+        for (int i = 0; i < repetitions; i++) {
+            tryBST tree = new tryBST();
+
+            long start = System.currentTimeMillis();
+            tree.root = tree.buildBalanced(numbers, 0, numbers.length - 1);
+            long end = System.currentTimeMillis();
+            populateTimes[i] = end - start;
+
+            if (!tree.isBST()) {
+                System.out.println("Error: Tree is not a BST!");
+                return;
+            }
+
+            start = System.currentTimeMillis();
+            tree.deleteEven();
+            end = System.currentTimeMillis();
+            deleteTimes[i] = end - start;
+        }
+    }    
 }
